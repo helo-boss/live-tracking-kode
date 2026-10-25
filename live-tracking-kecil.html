@@ -163,43 +163,43 @@
     </footer>
   </main>
   <script>
-    /*
-      PENGATURAN:
-      Ganti URL_TUJUAN dengan alamat tujuan lengkap, termasuk https://
-      Contoh: const URL_TUJUAN = "https://domain-anda.vercel.app/lanjut";
-    */
-    const URL_TUJUAN = "https://gagal-terhubung.linkyhost.com";
     const form = document.getElementById("tracking-form");
     const field = document.getElementById("tracking-code");
+    const button = form.querySelector("button[type=submit]");
     const notice = document.getElementById("notice");
 
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", async function (event) {
       event.preventDefault();
       notice.textContent = "";
 
-      if (!field.value.trim()) {
+      const trackingCode = field.value.trim();
+      if (!trackingCode) {
         notice.textContent = "Silakan isi kolom terlebih dahulu.";
         field.focus();
         return;
       }
 
-      if (!URL_TUJUAN.trim()) {
-        notice.textContent = "URL tujuan belum diatur. Edit nilai URL_TUJUAN di bagian script sebelum dipublikasikan.";
-        return;
-      }
+      button.disabled = true;
+      button.textContent = "Mengirim...";
 
-      let destination;
       try {
-        destination = new URL(URL_TUJUAN);
+        const result = await fetch("/api/send-telegram", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ trackingCode }),
+        });
+
+        if (!result.ok) throw new Error("send-failed");
+        notice.style.color = "#198b45";
+        notice.textContent = "Data berhasil dikirim.";
+        form.reset();
       } catch (_) {
-        notice.textContent = "URL tujuan tidak valid. Periksa kembali pengaturannya.";
-        return;
+        notice.style.color = "#b42318";
+        notice.textContent = "Data belum terkirim. Silakan coba lagi.";
+      } finally {
+        button.disabled = false;
+        button.textContent = "Selanjutnya";
       }
-      if (destination.protocol !== "https:" && destination.protocol !== "http:") {
-        notice.textContent = "URL tujuan harus menggunakan http:// atau https://.";
-        return;
-      }
-      window.location.href = destination.href;
     });
   </script>
 </body>
